@@ -1,0 +1,137 @@
+<link rel="import" href="../tangere/tangere.html" />
+<link rel="import" href="../at-core-modal/at-core-modal.html" />
+<link rel="import" href="../at-form-complex/at-form-complex.html" />
+<link rel="import" href="../at-carbon-icon-button/at-carbon-icon-button.html" />
+
+<dom-module id="at-form-modal">
+  <template>
+    <style>
+       :host {
+        display: block;
+        box-sizing: border-box;
+      }
+      
+      .form-complex {
+        margin: 0 12px;
+      }
+
+      .error-message {
+        color: var(--at-error-color);
+      }
+    </style>
+    <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap"></at-carbon-icon-button>
+    <div class="error-message">[[_errorMessage]]</div>
+    <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
+      <at-form-complex id="formComplex" class="form-complex" label="[[label]]" hide-label="[[hideLabel]]" disabled="[[disabled]]" hide="[[hide]]" schema="[[schema]]" value="[[value]]"></at-form-complex>
+    </at-core-modal>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "at-form-modal",
+    properties: {
+      icon: {
+        type: String,
+        value: "now:menu2"
+      },
+
+      /**
+       * Textual label for the element
+       * @property label
+       * @type String
+       * @default ''
+       */
+      label: {
+        type: String,
+        value: '',
+        title: 'Label'
+      },
+      /**
+       * When true hides the label for the element
+       * @property hideLabel
+       * @type Boolean
+       * @default false
+       */
+      hideLabel: {
+        type: Boolean,
+        value: false,
+        title: 'Do not show the label'
+      },
+      /**
+       * Specification of elements that should appear on the element.<br/>
+       * Provide either an object or string.<br/>
+       * List property definitions inside properties object.<br/>
+       *
+       * @property schema
+       * @type Object | Stirng
+       * @default { properties: {} }
+       */
+      schema: {
+        type: Object,
+        value: function() {
+          return {
+            properties: {}
+          };
+        },
+        title: 'Schema'
+      },
+      /**
+       * Holds values of the elements on the element
+       *
+       * @property value
+       * @type Object | String
+       * @default {}
+       */
+      value: {
+        type: Object,
+        value: function() {
+          return {};
+        },
+        title: 'Value'
+      },
+      /**
+       * When true disables all elements on the form
+       * @property disabled
+       * @type Boolean
+       * @default false
+       */
+      disabled: {
+        type: Boolean,
+        value: false,
+        title: 'Field value can not be changed'
+      },
+      /**
+       * Hides the element. When hidden nothing is displayed for the element
+       * @property hide
+       * @type Boolean
+       * @default false
+       */
+      hide: {
+        type: Boolean,
+        value: false,
+        title: 'Field is invisible'
+      }
+    },
+
+    _errorMessage: "",
+    _showValidationErrors: false,
+
+    ready: function() {
+
+    },
+
+    _handleMenuButtonTap: function(event) {
+      this.$.coreModal.open();
+      if (this._showValidationErrors) {
+        this.$.formComplex.validate(true);
+      }
+    },
+
+    _handleCloseModal: function(event) {
+      var isValid = this.$.formComplex.validate();
+      this._errorMessage = isValid ? "" : "modal form is not valid";
+      this._showValidationErrors = true;
+    }
+  });
+
+</script>

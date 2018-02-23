@@ -1,0 +1,12 @@
+{
+  "name": "at-form-modal",
+  "private": true,
+  "dependencies": {
+    "tangere": "TangereJs/tangere#master",
+    "at-core-modal": "TangereJs/at-core-modal#master",
+    "at-form-complex": "TangereJs/at-form-complex#master",
+    "at-carbon-icon-button": "TangereJs/at-carbon-icon-button#master",
+    "at-doc-viewer": "TangereJs/at-doc-viewer#master"
+  },
+  "version": "1.0.0.0"
+}
