@@ -22,7 +22,7 @@
     <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap"></at-carbon-icon-button>
     <div class="error-message">[[_errorMessage]]</div>
     <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
-      <at-form-complex id="formComplex" class="form-complex" label="[[label]]" hide-label="[[hideLabel]]" disabled="[[disabled]]" hide="[[hide]]" schema="[[schema]]" value="[[value]]"></at-form-complex>
+      <at-form-complex id="formComplex" class="form-complex" label="[[label]]" hide-label="[[hideLabel]]" disabled="[[disabled]]" hide="[[hide]]" schema="[[schema]]" value="[[value]]" on-value-changed="_handleValueChanged"></at-form-complex>
     </at-core-modal>
   </template>
 </dom-module>
@@ -131,6 +131,10 @@
       var isValid = this.$.formComplex.validate();
       this._errorMessage = isValid ? "" : "modal form is not valid";
       this._showValidationErrors = true;
+    },
+
+    _handleValueChanged: function(event) {
+      this.fire('value-changed', event.detail, { bubbles: false });
     }
   });
 
