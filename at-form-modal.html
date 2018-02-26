@@ -1,4 +1,5 @@
 <link rel="import" href="../tangere/tangere.html" />
+<link rel="import" href="../at-theme/at-theme.html" />
 <link rel="import" href="../at-core-modal/at-core-modal.html" />
 <link rel="import" href="../at-form-complex/at-form-complex.html" />
 <link rel="import" href="../at-carbon-icon-button/at-carbon-icon-button.html" />
@@ -10,6 +11,12 @@
         display: block;
         box-sizing: border-box;
       }
+
+      :host([disabled]) {
+        color: var(--at-carbon-icon-button-disabled-text, --disabled-text-color);
+        pointer-events: none;
+        cursor: auto;
+      }
       
       .form-complex {
         margin: 0 12px;
@@ -19,10 +26,13 @@
         color: var(--at-error-color);
       }
     </style>
-    <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap"></at-carbon-icon-button>
+    <div class="layout horizontal center">
+      <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap" disabled$="[[disabled]]"></at-carbon-icon-button>
+      <iron-label hidden$="[[hideLabel]]">[[label]]</iron-label>
+    </div>
     <div class="error-message">[[_errorMessage]]</div>
     <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
-      <at-form-complex id="formComplex" class="form-complex" label="[[label]]" hide-label="[[hideLabel]]" disabled="[[disabled]]" hide="[[hide]]" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-form-complex>
+      <at-form-complex id="formComplex" class="form-complex" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-form-complex>
     </at-core-modal>
   </template>
 </dom-module>
@@ -98,6 +108,7 @@
       disabled: {
         type: Boolean,
         value: false,
+        reflectToAttribute: true,
         title: 'Field value can not be changed'
       },
       /**
@@ -109,7 +120,8 @@
       hide: {
         type: Boolean,
         value: false,
-        title: 'Field is invisible'
+        title: 'Field is invisible',
+        observer: "_hideChanged"
       }
     },
 
@@ -125,6 +137,10 @@
 
     ready: function() {
 
+    },
+
+    _hideChanged: function(newValue, oldValue) {
+      this.toggleAttribute('hidden', newValue, this);
     },
 
     _handleMenuButtonTap: function(event) {
