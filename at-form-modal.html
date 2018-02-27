@@ -32,7 +32,7 @@
     </div>
     <div class="error-message">[[_errorMessage]]</div>
     <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
-      <at-form-complex id="formComplex" class="form-complex" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-form-complex>
+      <at-form-complex id="formComplex" class="form-complex" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged" label="[[_computeFormComplexLabel(label, modalTitle)]]"></at-form-complex>
     </at-core-modal>
   </template>
 </dom-module>
@@ -124,6 +124,19 @@
         value: false,
         title: 'Field is invisible',
         observer: "_hideChanged"
+      },
+      
+      /**
+       * Label for the modal window. If not set or set to empty string label property is used instead
+       * 
+       * @property modalTitle
+       * @type String
+       * @default ''
+       */
+      modalTitle: {
+        type: String,
+        value: '',
+        title: 'Modal title'
       }
     },
 
@@ -143,6 +156,11 @@
 
     _hideChanged: function(newValue, oldValue) {
       this.toggleAttribute('hidden', newValue, this);
+    },
+
+    _computeFormComplexLabel: function(label, modalTitle) {
+      var result = modalTitle && modalTitle.length ? modalTitle : label;
+      return result;
     },
 
     _handleMenuButtonTap: function(event) {
