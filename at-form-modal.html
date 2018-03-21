@@ -1,12 +1,12 @@
 <link rel="import" href="../tangere/tangere.html" />
-<link rel="import" href="../at-theme/at-theme.html" />
+<link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
 <link rel="import" href="../at-core-modal/at-core-modal.html" />
 <link rel="import" href="../at-form-complex/at-form-complex.html" />
 <link rel="import" href="../at-carbon-icon-button/at-carbon-icon-button.html" />
 
 <dom-module id="at-form-modal">
   <template>
-    <style>
+    <style include="at-core-style-classes">
        :host {
         display: block;
         box-sizing: border-box;
@@ -26,7 +26,7 @@
         color: var(--at-error-color);
       }
     </style>
-    <div class="layout horizontal center">
+    <div class="layout-horizontal layout-center">
       <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap" disabled$="[[disabled]]"></at-carbon-icon-button>
       <iron-label hidden$="[[hideLabel]]">[[label]]</iron-label>
     </div>
