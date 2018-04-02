@@ -28,9 +28,9 @@
     </style>
     <div class="layout-horizontal layout-center">
       <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap" disabled$="[[disabled]]"></at-carbon-icon-button>
-      <iron-label hidden$="[[hideLabel]]">[[label]]</iron-label>
+      <iron-label hidden$="[[hideLabel]]" class="font-body1">[[label]]</iron-label>
     </div>
-    <div class="error-message">[[_errorMessage]]</div>
+    <div class="error-message font-body1">[[_errorMessage]]</div>
     <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
       <at-form-complex id="formComplex" class="form-complex" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged" label="[[_computeFormComplexLabel(label, modalTitle)]]"></at-form-complex>
     </at-core-modal>
