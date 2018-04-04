@@ -10,22 +10,24 @@
   <link rel="import" href="../at-form-modal.html">
 
   <style is="custom-style">
-
   </style>
 </head>
 
 <body>
   <at-form-modal id="formModal" label="Adaptive settings"></at-form-modal>
-
+  <div>
+    <span>Value echo</span>
+    <pre id="valueEcho"></pre>
+  </div>
   <script>
     document.addEventListener('WebComponentsReady', function() {
       var schema = {
         properties: {
-         'id': {
+          'id': {
             'title': 'The unique identifier for a product',
             'type': 'number',
             'required': true
-          },        
+          },
           'city': {
             'type': 'string',
             'value': 'Default city name',
@@ -35,6 +37,11 @@
       };
       var formModal = document.getElementById('formModal');
       formModal.schema = schema;
+      
+      var valueEcho = document.getElementById('valueEcho');
+      formModal.addEventListener('value-changed', function(event) {
+        valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
+      });
     });
   </script>
 </body>

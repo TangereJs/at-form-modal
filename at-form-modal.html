@@ -1,13 +1,13 @@
 <link rel="import" href="../tangere/tangere.html" />
 <link rel="import" href="../at-core-style-classes/at-core-style-classes.html" />
-<link rel="import" href="../at-core-modal/at-core-modal.html" />
-<link rel="import" href="../at-form-complex/at-form-complex.html" />
+<link rel="import" href="../iron-label/iron-label.html">
+<link rel="import" href="../at-core-modal-element/at-core-modal-element.html">
 <link rel="import" href="../at-carbon-icon-button/at-carbon-icon-button.html" />
 
 <dom-module id="at-form-modal">
   <template>
     <style include="at-core-style-classes">
-       :host {
+      :host {
         display: block;
         box-sizing: border-box;
       }
@@ -31,9 +31,8 @@
       <iron-label hidden$="[[hideLabel]]" class="font-body1">[[label]]</iron-label>
     </div>
     <div class="error-message font-body1">[[_errorMessage]]</div>
-    <at-core-modal id="coreModal" on-close-modal="_handleCloseModal">
-      <at-form-complex id="formComplex" class="form-complex" schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged" label="[[_computeFormComplexLabel(label, modalTitle)]]"></at-form-complex>
-    </at-core-modal>
+    <at-core-modal-element id="coreModalElement" on-close-modal="_handleCloseModal" element-name="at-form-complex/at-form-complex"
+      schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-core-modal-element>
   </template>
 </dom-module>
 <script>
@@ -158,20 +157,18 @@
       this.toggleAttribute('hidden', newValue, this);
     },
 
-    _computeFormComplexLabel: function(label, modalTitle) {
-      var result = modalTitle && modalTitle.length ? modalTitle : label;
-      return result;
-    },
-
     _handleMenuButtonTap: function(event) {
-      this.$.coreModal.open();
+      this.$.coreModalElement.open();
       if (this._showValidationErrors) {
-        this.$.formComplex.validate(true);
+        this.$.coreModalElement._getRenderedElement().validate(true);
       }
     },
 
     _handleCloseModal: function(event) {
-      var isValid = this.$.formComplex.validate();
+      var reason = event.detail.reason;
+      if (!reason || reason === "cancel") return;
+
+      var isValid = this.$.coreModalElement._getRenderedElement().validate();
       this._errorMessage = isValid ? "" : "modal form is not valid";
       this._showValidationErrors = true;
     },
