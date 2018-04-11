@@ -32,7 +32,7 @@
     </div>
     <div class="error-message font-body1">[[_errorMessage]]</div>
     <at-core-modal-element id="coreModalElement" on-close-modal="_handleCloseModal" element-name="at-form-complex/at-form-complex"
-      schema="[[schema]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-core-modal-element>
+      schema="[[schema]]" schema-url="[[schemaUrl]]" value="{{value}}" on-value-changed="_handleValueChanged"></at-core-modal-element>
   </template>
 </dom-module>
 <script>
@@ -85,6 +85,13 @@
         title: 'Schema',
         mode: "application/json"
       },
+
+      schemaUrl: {
+        type: String,
+        value: '',
+        title: 'Scheam Url'
+      },
+
       /**
        * Holds values of the elements on the element
        *
