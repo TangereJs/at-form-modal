@@ -32,7 +32,7 @@
     </div>
     <div class="error-message font-body1">[[_errorMessage]]</div>
     <at-core-modal-element id="coreModalElement" on-close-modal="_handleCloseModal" element-name="at-form-complex/at-form-complex"
-      schema="[[schema]]" schema-url="[[schemaUrl]]" value="{{value}}" wide$="[[wide]]" on-value-changed="_handleValueChanged"></at-core-modal-element>
+      schema="[[schema]]" schema-url="[[schemaUrl]]" wide$="[[wide]]" on-value-changed="_handleValueChanged"></at-core-modal-element>
   </template>
 </dom-module>
 <script>
@@ -171,7 +171,8 @@
       this.toggleAttribute('hidden', newValue, this);
     },
 
-    _handleMenuButtonTap: function(event) {
+    _handleMenuButtonTap: function (event) {    
+      this.$.coreModalElement.value = this.value;
       this.$.coreModalElement.open();
       if (this._showValidationErrors) {
         this.$.coreModalElement._getRenderedElement().validate(true);
@@ -187,8 +188,9 @@
       this._showValidationErrors = true;
     },
 
-    _handleValueChanged: function(event) {
-      this.fire('value-changed', event.detail, { bubbles: false });
+    _handleValueChanged: function (event) {      
+      this.value = event.detail.value;
+      this.fire('value-changed', { value: this.value }, { bubbles: false });
     }
   });
 
