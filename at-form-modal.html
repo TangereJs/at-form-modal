@@ -191,6 +191,12 @@
     _handleValueChanged: function (event) {      
       this.value = event.detail.value;
       this.fire('value-changed', { value: this.value }, { bubbles: false });
+    },
+
+    validate: function() {
+      var renderedElt = this.$.coreModalElement._getRenderedElement();
+      if (!renderedElt) return true;
+      return renderedElt.validate();
     }
   });
 
