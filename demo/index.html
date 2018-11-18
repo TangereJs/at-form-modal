@@ -15,6 +15,7 @@
 
 <body>
   <at-form-modal id="formModal" label="Adaptive settings"></at-form-modal>
+  <at-form-modal id="formModalw" label="Adaptive settings wide" wide></at-form-modal>
   <div>
     <span>Value echo</span>
     <pre id="valueEcho"></pre>
@@ -40,8 +41,14 @@
       var formModal = document.getElementById('formModal');
       formModal.schema = schema;
       
+      var formModalw = document.getElementById('formModalw');
+      formModalw.schema = schema;
+      
       var valueEcho = document.getElementById('valueEcho');
       formModal.addEventListener('value-changed', function(event) {
+        valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
+      });
+      formModalw.addEventListener('value-changed', function(event) {
         valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
       });
     });
