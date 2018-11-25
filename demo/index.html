@@ -10,6 +10,7 @@
   <link rel="import" href="../at-form-modal.html">
 
   <style is="custom-style">
+
   </style>
 </head>
 
@@ -32,18 +33,44 @@
           'city': {
             'type': 'string',
             'value': 'Default city name',
-            'required': true,
-            "xtype": "textarea",
-            "autogrowLineLimit": 99
+            'required': true
           },
+          "testunknownuser": {
+            "type": "boolean",
+            "xtype": "toggle",
+            "title": "Test Unknown User",
+            "xgridcols": "6",
+            "default": "false"
+          },
+          "serviceerror": {
+            "type": "string",
+            "xtype": "enum",
+            "xvaluelist": [{
+                "title": "no error",
+                "value": "0"
+              },
+              {
+                "title": "always return error 500 unknown error",
+                "value": "1"
+              },
+              {
+                "title": "always return error 461",
+                "value": "2"
+              }
+            ],
+            "noPreload": true,
+            "title": "Service Error",
+            "itemView": "",
+            "xgridcols": "6"
+          }
         }
       };
       var formModal = document.getElementById('formModal');
       formModal.schema = schema;
-      
+
       var formModalw = document.getElementById('formModalw');
       formModalw.schema = schema;
-      
+
       var valueEcho = document.getElementById('valueEcho');
       formModal.addEventListener('value-changed', function(event) {
         valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
