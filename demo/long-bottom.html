@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>at-form-modal demo page</title>
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../at-form-modal.html">
+
+  <style is="custom-style">
+
+  </style>
+</head>
+
+<body>
+  <div>
+    1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+        1<br>
+    2<br>
+    3<br>
+    4<br>
+    5<br>
+    6<br>
+    7<br>
+    8<br>
+    9<br>
+    -----<br>
+  </div>
+  <at-form-modal id="formModal" label="Adaptive settings"></at-form-modal>
+  <at-form-modal id="formModalw" label="Adaptive settings wide" wide></at-form-modal>
+  <div>
+    <span>Value echo</span>
+    <pre id="valueEcho"></pre>
+  </div>
+  
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+      var schema = {
+        properties: {
+          'id': {
+            'title': 'The unique identifier for a product',
+            'type': 'number',
+            'required': true
+          },
+          'city': {
+            'type': 'string',
+            'value': 'Default city name',
+            'required': true
+          },
+          "testunknownuser": {
+            "type": "boolean",
+            "xtype": "toggle",
+            "title": "Test Unknown User",
+            "xgridcols": "6",
+            "default": "false"
+          },
+          "serviceerror": {
+            "type": "string",
+            "xtype": "enum",
+            "xvaluelist": [{
+                "title": "no error",
+                "value": "0"
+              },
+              {
+                "title": "always return error 500 unknown error",
+                "value": "1"
+              },
+              {
+                "title": "always return error 461",
+                "value": "2"
+              }
+            ],
+            "noPreload": true,
+            "title": "Service Error",
+            "itemView": "",
+            "xgridcols": "6"
+          }
+        }
+      };
+      var formModal = document.getElementById('formModal');
+      formModal.schema = schema;
+
+      var formModalw = document.getElementById('formModalw');
+      formModalw.schema = schema;
+
+      var valueEcho = document.getElementById('valueEcho');
+      formModal.addEventListener('value-changed', function(event) {
+        valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
+      });
+      formModalw.addEventListener('value-changed', function(event) {
+        valueEcho.textContent = JSON.stringify(event.detail.value, null, ' ');
+      });
+    });
+  </script>
+</body>
+
+</html>
