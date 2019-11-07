@@ -164,7 +164,7 @@
     _showValidationErrors: false,
 
     ready: function() {
-
+      this._isReady = true;
     },
 
     _hideChanged: function(newValue, oldValue) {
@@ -193,10 +193,12 @@
       this.fire('value-changed', { value: this.value }, { bubbles: false });
     },
 
-    validate: function() {
-      var renderedElt = this.$.coreModalElement._getRenderedElement();
-      if (!renderedElt) return true;
-      return renderedElt.validate();
+    validate: function () {
+      if (this._isReady == true) {
+        var renderedElt = this.$.coreModalElement._getRenderedElement();
+        if (!renderedElt) return true;
+        return renderedElt.validate();
+      }
     }
   });
 
