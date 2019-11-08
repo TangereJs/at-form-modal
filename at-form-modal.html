@@ -167,6 +167,14 @@
       this._isReady = true;
     },
 
+    open: function () {
+      this.$.coreModalElement.value = this.value;
+      this.$.coreModalElement.open();
+      if (this._showValidationErrors) {
+        this.$.coreModalElement._getRenderedElement().validate(true);
+      }
+    },
+
     _hideChanged: function(newValue, oldValue) {
       this.toggleAttribute('hidden', newValue, this);
     },
@@ -194,11 +202,11 @@
     },
 
     validate: function () {
-      if (this._isReady == true) {
-        var renderedElt = this.$.coreModalElement._getRenderedElement();
-        if (!renderedElt) return true;
-        return renderedElt.validate();
-      }
+      if (!this._isReady) return;
+
+      var renderedElt = this.$.coreModalElement._getRenderedElement();
+      if (!renderedElt) return true;
+      return renderedElt.validate();
     }
   });
 
