@@ -26,16 +26,13 @@
         color: var(--at-error-color);
       }
     </style>
-
-    <at-carbon-alert id="carbonAlert" confirm-button="OK"></at-carbon-alert>
-    <at-core-activity id="formDataPostActivity" method="POST" url="/api/adenin.Development.TestForm/FormData" content-type="application/json" on-response="_handleFormDataPostResponse"></at-core-activity>
-
     <div class="layout-horizontal layout-center">
       <at-carbon-icon-button icon="[[icon]]" on-tap="_handleMenuButtonTap" disabled$="[[disabled]]"></at-carbon-icon-button>
       <iron-label hidden$="[[hideLabel]]" class="font-body1">[[label]]</iron-label>
     </div>
     <div class="error-message font-body1">[[_errorMessage]]</div>
-    <at-core-modal-element id="coreModalElement" on-close-modal="_handleCloseModal" element-name="at-form-complex/at-form-complex" schema="[[schema]]" schema-url="[[schemaUrl]]" wide$="[[wide]]" on-value-changed="_handleValueChanged"></at-core-modal-element>
+    <at-core-modal-element id="coreModalElement" on-close-modal="_handleCloseModal" element-name="at-form-complex/at-form-complex"
+      schema="[[schema]]" schema-url="[[schemaUrl]]" wide$="[[wide]]" on-value-changed="_handleValueChanged"></at-core-modal-element>
   </template>
 </dom-module>
 <script>
@@ -201,42 +198,7 @@
 
     _handleValueChanged: function (event) {      
       this.value = event.detail.value;
-
-      if (this.schema.properties.bindingMode != undefined) {
-        if (this.schema.properties.bindingMode.value !== 0) {
-
-          var param = {
-            formData: event.detail.value
-          }
-
-          this.$.formDataPostActivity.body = param;
-          this.$.formDataPostActivity.generateRequest();
-
-        }
-      }
-
       this.fire('value-changed', { value: this.value }, { bubbles: false });
-    },
-
-    _handleFormDataPostResponse: function (response) {
-      if (response.detail.Data.success == true) {
-        this.$.coreModalElement.close();
-
-        if (response.detail.Data.messasge != "") {
-          Polymer.signal('sys-success', {
-            message: response.detail.Data.message,
-            icon: 'now:checkmark'
-          });
-        }
-      }
-
-      if (response.detail.Data.success == false) {
-        if (response.detail.Data.message != "") {
-          this.$.carbonAlert.message = response.detail.Data.message;
-          this.$.carbonAlert.open();
-        }
-      }
-
     },
 
     validate: function () {
